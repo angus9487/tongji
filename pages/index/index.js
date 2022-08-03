@@ -88,7 +88,7 @@ Page({
     dosuccess: function (e) {
         console.log(e)
         this.setData({
-            word: e.test
+            word: {"people":e.test,"point":"1"}
         })
     },
 
@@ -96,7 +96,7 @@ Page({
         console.log('request fail --> ' + e);
     },
     confirm: function (e) {
-        var text = this.data.content + this.data.word + "\n";
+        var text = this.data.content + this.data.word.people + ": " + this.data.word.point  + "\n";
         this.setData({
             content: text,
             word: ""

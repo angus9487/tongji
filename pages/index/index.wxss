@@ -1,5 +1,21 @@
 /* pages/yuyin/yuyin.wxss */
 
+
+.xxtext {
+    border: 1px solid #ccc;
+    position: relative;
+    width: 600rpx;
+    height: 100rpx;
+    left: 80rpx;
+    margin-top: 30rpx;
+}
+.xxnCon {
+    border: 1px solid #ccc;
+    margin: 0 auto;
+    width: 100rpx;
+    height: 100rpx;
+    padding: 10rpx 10rpx 70rpx;
+}
 .yuyinWrap {
     position: relative;
     margin-top: 100rpx;

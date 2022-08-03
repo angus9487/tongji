@@ -5,12 +5,22 @@
 </view>
 
 <swiper bindchange="bindchange" current="{{navState}}" class="block">
-
     <block class="block">
+        <swiper-item>
+            <view class="style-roll">
+                <text>左右可滑动1</text>
+                <view class="xxtext">
+                    <textarea class='' placeholder='记录' value='{{title}}'></textarea>
+                </view>
+            </view>
+        </swiper-item>
         <swiper-item class="block">
             <view class="style-roll">
-                <view class="yuyinWrap">
-                    <textarea class='yuyinCon' placeholder='请输入内容' value='{{word}}'></textarea>
+                <view class="xxtext">
+                    <textarea class='' placeholder='人员' value='{{word.people}}'></textarea>
+                </view>
+                <view class="xxtext">
+                    <textarea class='' placeholder='记分' value='{{word.point}}'></textarea>
                 </view>
                 <view class="yuyinWrap">
                     <textarea class='yuyinCon' placeholder='已录入内容' value='{{content}}'></textarea>
@@ -20,12 +30,10 @@
                         <button class="" bindtap="confirm">
                             <text>确定</text>
                         </button>
-                        <view class=''>
                             <button class="" bindtouchstart="touchStart" bindtouchend="touchEnd">
                                 <text wx:if="{{recordState == false}}">按住 说话</text>
                                 <text wx:else>松开 结束</text>
                             </button>
-                        </view>
                     </view>
                     <!-- 开始语音 弹出语音图标表示正在录音 -->
                     <cover-view class="startYuyinImage" wx:if="{{recordState == true}}">
@@ -33,11 +41,6 @@
                         <cover-view>开始语音</cover-view>
                     </cover-view>
                 </view>
-            </view>
-        </swiper-item>
-        <swiper-item>
-            <view class="style-roll">
-                <text>左右可滑动2</text>
             </view>
         </swiper-item>
         <swiper-item>
