@@ -14,6 +14,7 @@ Page({
         //语音
         recordState: false, //录音状态
         content: '',//内容
+        peopleList: [],
     },
     /**
      * 生命周期函数--监听页面加载
@@ -21,6 +22,7 @@ Page({
     onLoad: function (options) {
         //识别语音
         this.initRecord();
+        this.getPeople();
     },
     // 手动输入内容
     conInput: function (e) {
@@ -106,8 +108,20 @@ Page({
     bindchange(e) {
         // console.log(e.detail.current)
         let index = e.detail.current;
+        if(index == 0)
+            this.getPeople();
+        if(index == 2)
+            console.log("biaoge");
         this.setData({
             navState: index
+        })
+    },
+    getPeople: function(){
+        call.getData("/getPeoples", this.getPeopleSuccess, this.dofail);
+    },
+    getPeopleSuccess: function(e){
+        this.setData({
+            peopleList: e.data
         })
     },
     //点击导航
@@ -118,4 +132,41 @@ Page({
             navState: index
         })
     },
+    removeBtn: function(e){
+        let name = e.currentTarget.dataset['name']
+        let that = this;
+        wx.showModal({
+            title: '提示',
+            content: '是否删除人员：'+ name,
+            success:function(res){
+                if(res.confirm){
+                    call.getData("/hello", that.doSuccess, that.dofail);
+                    that.getPeople();
+                }else{
+                   console.log('弹框后点取消')
+                }
+            }
+         })
+    },
+    doSuccess: function(e){
+        wx.showToast({
+            title: '操作成功！',  // 标题
+            icon: 'success',   // 图标类型，默认success
+            duration: 1500   // 提示窗停留时间，默认1500ms
+        })
+    },
+    addPeopleBtn: function(){
+        wx.showModal({
+            title: '提示',
+            content: '是否删除人员：',
+            editable: true,
+            success:function(res){
+                if(res.confirm){
+                    console.log('弹框后点确定')
+                }else{
+                   console.log('弹框后点取消')
+                }
+            }
+         })
+    }
 })

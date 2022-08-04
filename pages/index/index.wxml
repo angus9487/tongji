@@ -8,9 +8,18 @@
     <block class="block">
         <swiper-item>
             <view class="style-roll">
-                <text>左右可滑动1</text>
+                <text style="font-size: large;font-weight: 500;">标题:</text>
                 <view class="xxtext">
-                    <textarea class='' placeholder='记录' value='{{title}}'></textarea>
+                    <textarea class='' placeholder='标题' value='{{title}}'></textarea>
+                </view>
+                <button class="peoplebtn" bindtap="addPeopleBtn">
+                    <text>增加人员</text>
+                </button>
+                <text style="font-size: large;font-weight: 500;">人员列表:</text>
+                <view wx:for="{{peopleList}}" wx:key="id">
+                <button class="peoplebtn" bindtap="removeBtn" data-name="{{item.name}}">
+                    <text>{{item.name}}</text>
+                </button>
                 </view>
             </view>
         </swiper-item>
