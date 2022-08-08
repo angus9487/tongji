@@ -14,6 +14,8 @@ Page({
         //语音
         recordState: false, //录音状态
         content: '',//内容
+        word: '',
+        title1: '',
         peopleList: [],
     },
     /**
@@ -61,7 +63,8 @@ Page({
             //     })
             //     return;
             //   }
-            that.checkWord("123")
+            that.checkWord("测试3")
+            // that.checkWord(res.result)
         }
     },
     //语音  --按住说话
@@ -84,21 +87,37 @@ Page({
     },
 
     checkWord: function (e) {
-        call.getData("/hello", this.dosuccess, this.dofail);
+        console.log(e)
+        call.getData("/confirmUser?words="+e, this.checkSuccess, this.dofail);
     },
 
-    dosuccess: function (e) {
+    checkSuccess: function (e) {
         console.log(e)
         this.setData({
-            word: {"people":e.test,"point":"1"}
+            word: {"people":e.name,"point":e.point}
+        })
+    },
+
+    success: function (e) {
+        wx.showToast({
+            title: '操作成功！',  // 标题
+            icon: 'success',   // 图标类型，默认success
+            duration: 500   // 提示窗停留时间，默认1500ms
         })
     },
 
     dofail: function (e) {
         console.log('request fail --> ' + e);
     },
+    setTitle: function(e){
+        this.setData({
+            title1: e.detail.value
+        })
+    },
     confirm: function (e) {
         var text = this.data.content + this.data.word.people + ": " + this.data.word.point  + "\n";
+        console.log(this.data.title1);
+        call.getData("/updateWork?title="+this.data.title1+"&people="+this.data.word.people+"&point="+this.data.word.point, this.success, this.dofail);
         this.setData({
             content: text,
             word: ""
@@ -134,14 +153,15 @@ Page({
     },
     removeBtn: function(e){
         let name = e.currentTarget.dataset['name']
+        let id = e.currentTarget.dataset['id']
         let that = this;
         wx.showModal({
             title: '提示',
             content: '是否删除人员：'+ name,
             success:function(res){
                 if(res.confirm){
-                    call.getData("/hello", that.doSuccess, that.dofail);
-                    that.getPeople();
+                    console.log(id)
+                    call.getData("/deletePeople?id="+id, that.doSuccess, that.dofail);
                 }else{
                    console.log('弹框后点取消')
                 }
@@ -154,15 +174,17 @@ Page({
             icon: 'success',   // 图标类型，默认success
             duration: 1500   // 提示窗停留时间，默认1500ms
         })
+        this.getPeople();
     },
-    addPeopleBtn: function(){
+    addPeopleBtn: function(e){
+        let that = this;
         wx.showModal({
-            title: '提示',
-            content: '是否删除人员：',
+            title: '姓名',
+            content: '',
             editable: true,
             success:function(res){
                 if(res.confirm){
-                    console.log('弹框后点确定')
+                    call.getData("/addPeople?name="+res.content, that.doSuccess, that.dofail);
                 }else{
                    console.log('弹框后点取消')
                 }
